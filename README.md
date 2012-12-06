@@ -1,4 +1,4 @@
 server-core
 ===========
 
-bytengine-server-core
+Welcome to Bytengine Server!
