@@ -1,0 +1,121 @@
+{% extends base.html %}
+
+{% block css_files %}
+
+{% end %}
+
+{% block css_page %}
+}
+{% end %}
+
+{% block page_content %}
+
+<div id="main-content" class="container"><!--container-->
+        
+    <div class="row-fluid m-t-40">
+        <div class="span3">
+            <div class="well sidebar-nav">
+                <ul class="nav nav-list">
+                    <li class="nav-header">DOWNLOADS</li>
+                    <li id="lnk_clients"><a href="javascript:void(0);">Clients</a></li>
+                    <li id="lnk_tools"><a href="javascript:void(0);">Tools</a></li>
+                    <li id="lnk_all"><a href="javascript:void(0);">All</a></li>
+                </ul>
+            </div><!--/.well -->
+        </div><!--/span-->
+        
+        
+        <div id="download_items" class="span9"> <!--/span-->              
+            
+        </div><!--/span-->
+        
+    </div><!--/row-->
+    
+</div><!--/container-->
+
+<script type="text/template" id="tmpl_download_items">
+    <% _.each(data, function(__item) { %>
+        <section class="m-t-30 download_item <%= __item.category %>">
+            <div class="page-header">
+                <h5><%= __item.title %></h5>
+            </div>        
+            <p class="smart-gray p-10 f-13">
+                <%= __item.description %>
+                <br /><br />
+                <a href="<%= __item.url %>" class="f-14 fontface-2">Download &rarr;</a>
+            </p>    
+        </section>
+    <% }); %>
+</script>
+    
+
+{% end %}
+
+{% block js_files %}
+<script type="text/javascript" src="{{ static_url('main/js/underscore_min.js') }}"></script>
+{% end %}
+
+{% block page_js %}
+var downloadItems = [
+    {
+        title:"Python",
+        category:"client",
+        description: "The Python client depends on the excellent Requests module\
+                      which can be installed with pip or easy_install.\
+                      Just include the connector.py file in your application and start coding!",
+        url:"/static/main/downloads/python_client.zip"
+    },
+    {
+        title:"PHP",
+        category:"client",
+        description:"The PHP client uses curl so make sure you have 'php_curl' \
+                     installed. To start coding with the client, include the \
+                     connector.php file in your application. Happy coding!",
+        url:"/static/main/downloads/php_client.zip"
+    },
+    {
+        title:"Batch Job Script",
+        category:"tool",
+        description:"Batchman is a python script processor that allows you to send \
+                     batch commands to bytengine. It relies on the 'Bytengine Python \
+                     client' and requires that you have 'python 2.5 +' \
+                     as well as the excellent python 'requests' module installed.",
+        url:"/static/main/downloads/batchman.zip"
+    }
+];
+
+$(document).ready(function(){
+    var tmpl = _.template($("#tmpl_download_items").html());
+    var _html = tmpl({data:downloadItems});
+    $("#download_items").html(_html);
+
+    $("#lnk_clients").click(function(e){
+        e.preventDefault();
+        $(this).toggleClass("active");
+        $("#lnk_all").removeClass("active");
+        $("#lnk_tools").removeClass("active");
+        $(".download_item").hide();
+        $(".client").show();
+    });
+    
+    $("#lnk_tools").click(function(e){
+        e.preventDefault();
+        $(this).toggleClass("active");
+        $("#lnk_clients").removeClass("active");
+        $("#lnk_all").removeClass("active");
+        $(".download_item").hide();
+        $(".tool").show();
+    });
+    
+    $("#lnk_all").click(function(e){
+        e.preventDefault();
+        $(this).toggleClass("active");
+        $("#lnk_clients").removeClass("active");
+        $("#lnk_tools").removeClass("active");
+        $(".download_item").show();
+    });
+    
+    $("#lnk_clients").trigger("click");
+});
+
+{% end %}

@@ -1,0 +1,44 @@
+{% extends base.html %}
+
+{% block css_files %}
+<link rel="stylesheet" href="{{ static_url('main/css/prettify.css') }}" >
+{% end %}
+
+{% block page_content %}
+
+<div class="container"><!--container-->    
+    <div class="row-fluid m-t-40">
+        <div class="span3">
+            <div class="well sidebar-nav">
+                <ul class="nav nav-list">
+                    {% for namespace in commands %}
+                        <li class="nav-header">Namespace: {{namespace}}</li>
+                        {% for command in commands[namespace] %}
+                            {% if command == selected_command and namespace == selected_namespace %}
+                            <li class="active"><a href="/ui/documentation/{{namespace}}/{{command}}">{{command}}</a></li>
+                            {% else %}
+                            <li><a href="/ui/documentation/{{namespace}}/{{command}}">{{command}}</a></li>
+                            {% end %}
+                        {% end %}
+                    {% end %}
+                </ul>
+            </div><!--/.well -->
+        </div><!--/span-->
+        
+        <div class="span9">
+            {% raw helptxt %}
+            
+        </div><!--/span-->
+        
+    </div><!--/row-->
+    
+</div><!--/container-->
+
+{% end %}
+
+{% block js_files %}
+<script type="text/javascript" src="{{ static_url('main/js/tabslide.js') }}"></script>
+<script type="text/javascript" src="{{ static_url('main/js/custom.js') }}"></script>
+{% end %}
+
+{% block page_js %}{% end %}

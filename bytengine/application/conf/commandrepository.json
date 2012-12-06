@@ -1,0 +1,56 @@
+{
+    "core":{
+        "module":"bytengine.application.core.command",
+        "class":"Server",
+        "commands":{            
+            "login":{ "function":"cmd_login", "showhelp":true },
+            "logout":{ "function":"cmd_logout", "showhelp":true },
+            "useradd":{ "function":"cmd_makeuser", "showhelp":true },
+            "userdel":{ "function":"cmd_deleteuser", "showhelp":true },
+            "userget":{ "function":"cmd_getuser", "showhelp":true },
+            "userall":{ "function":"cmd_allusers", "showhelp":true },
+            "passwd":{ "function":"cmd_password", "showhelp":true },
+            "dbaccess":{ "function":"cmd_dbaccess", "showhelp":true },
+            "selectdb":{ "function":"cmd_changedb", "showhelp":true },
+            "whichdb":{ "function":"cmd_currentdb", "showhelp":true },
+            "whoami":{ "function":"cmd_whoami", "showhelp":true },
+            "svraccess":{ "function":"cmd_useraccess", "showhelp":true },
+            
+            "counter":{ "function":"cmd_counter", "showhelp":true },
+            "counterall":{ "function":"cmd_counterlist", "showhelp":true },
+            "counterdel":{ "function":"cmd_counterclear", "showhelp":true },
+            "counterget":{ "function":"cmd_counterinfo", "showhelp":true },
+            
+            "alldbs":{ "function":"cmd_alldbs", "showhelp":true },
+            "rebuild":{ "function":"cmd_initserver", "showhelp":true },
+            "makedb":{ "function":"cmd_makedb", "showhelp":true },
+            "copydb":{ "function":"cmd_copydb", "showhelp":true },
+            "dropdb":{ "function":"cmd_dropdb", "showhelp":true },
+            
+            "mkdir":{ "function":"cmd_makedir", "showhelp":true },
+            "ls":{ "function":"cmd_listdir", "showhelp":true },
+            "rm":{ "function":"cmd_delete", "showhelp":true },
+            "rename":{ "function":"cmd_rename", "showhelp":true },
+            "info":{ "function":"cmd_info", "showhelp":true },
+            "mv":{ "function":"cmd_move", "showhelp":true },
+            "cp":{ "function":"cmd_copy", "showhelp":true },
+            "mkfile":{ "function":"cmd_makefile", "showhelp":true },
+            "viewfile":{ "function":"cmd_readfile", "showhelp":true },
+            "modfile":{ "function":"cmd_updatefile", "showhelp":true },
+            "mfset":{ "function":"cmd_setvalue", "showhelp":true },
+            "mfunset":{ "function":"cmd_unsetvalue", "showhelp":true },
+            "mgupdate":{ "function":"cmd_mongoupdate", "showhelp":true },
+            "mkpublic":{ "function":"cmd_makepublic", "showhelp":true },
+            "mkprivate":{ "function":"cmd_makeprivate", "showhelp":true },
+            "upload":{ "function":"cmd_upload", "showhelp":false },
+            "directaccess":{ "function":"cmd_directaccess", "showhelp":false },
+            "download":{ "function":"cmd_download", "showhelp":false },
+            "attachdel":{ "function":"cmd_rmattachment", "showhelp":true },
+            "bql":{ "function":"cmd_find", "showhelp":true },
+            "mktemplate":{ "function":"cmd_templaterender", "showhelp":true },
+            "mailsend":{ "function":"cmd_emailsend", "showhelp":true },
+            "mailcheck":{ "function":"cmd_emailsend_status", "showhelp":true },
+            "help":{ "function":"cmd_help", "showhelp":true }
+        }
+    }
+}

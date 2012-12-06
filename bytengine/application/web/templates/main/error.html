@@ -1,0 +1,38 @@
+{% extends base.html %}
+
+{% block css_files %}{% end %}
+
+{% block page_content %}
+    
+<div class="container"><!--container-->
+   
+    <div class="row-fluid m-t-250">
+        <div class="span5">
+            <h1 class="f-250 m-t-60 electric-blue-text">{{error}}</h1>
+        </div><!--/span-->
+        
+        
+        <div class="span7"> <!--/span-->              
+           
+            <section id="">             
+                <h3 class="f-50">{{message_short}}</h3>
+                <hr />
+                <p class="p-10 f-17">
+                    {{message_long}}
+                </p>                          
+                
+            </section>                
+            
+            <div class="clear"></div>
+            
+        </div><!--/span-->
+        
+    </div><!--/row-->
+        
+</div><!--/container-->
+
+{% end %}
+
+{% block js_files %}{% end %}
+
+{% block page_js %}{% end %}

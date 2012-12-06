@@ -1,0 +1,115 @@
+{% extends base.html %}
+
+{% block css_files %}{% end %}
+
+{% block page_content %}
+
+<div class="container"><!--container-->
+    <div class="row-fluid m-t-40">
+        <div class="span3">
+            <div class="well sidebar-nav">
+                <ul class="nav nav-list">
+                    {% for namespace in commands %}
+                        <li class="nav-header">Namespace: {{namespace}}</li>
+                        {% for command in commands[namespace] %}
+                            <li><a href="/ui/documentation/{{namespace}}/{{command}}">{{command}}</a></li>
+                        {% end %}
+                    {% end %}
+                </ul>
+            </div><!--/.well -->
+        </div><!--/span-->
+
+        <div class="span9">
+
+            <div class="hero-unit p-10">
+
+                <h1>Hello, Developer!</h1><br/>
+                <p>Welcome to the Bytengine API developer documentation! Here you'll find information
+                to help you administer the server as well as save and retrieve data!</p>
+            </div>
+
+            <div class="row-fluid">
+                <div class="span4">
+                    <h3 class="royal-blue-text">About Bytengine</h3>
+                    <p>Bytengine is a data server and application backend services provider.
+                    <strong>Data is stored in JSON and Binary format</strong> and can be accessed using Bytengine's
+                    REST API. Core server commands allow storage and retrieval of data. Bytengine
+                    is also designed to allow developers to extend it by implementing their own server commands.</p>
+                </div><!--/span-->
+
+                <div class="span4">
+                    <h3 class="royal-blue-text">Bytengine BQL</h3>
+                    <p><strong>Bytengine Query Language (BQL)</strong> is a data search and retrieval mini language.
+                    Loosely based on Structured Query Language (SQL), BQL has fewer keywords/functions while remaining
+                    powerful and expressive enough to allow developers to build complex queries. BQL can also be extended to
+                    include user defined function.</p>
+                </div><!--/span-->
+
+                <div class="span4">
+                    <h3 class="royal-blue-text">Byterminal</h3>
+                    <p>Byterminal is Bytengine's web based administration console. From the terminal you can create and manage
+                    databases, users and content. The terminal is an example of the type of applications that can be built with
+                    Bytengine. <strong>Examples in the command help documentation can be typed directly in the terminal to interact
+                    with Bytengine.</strong></p>
+                </div><!--/span-->
+            </div><!--/row-->
+
+            <div class="row-fluid">
+                <div class="span4">
+                    <h3 class="royal-blue-text">Databases</h3>
+                    <p>A Bytengine server instance can contain multiple content storage databases. Databases constitute the first
+                    level of content organization. Having multiple databases allows Bytengine to be used as a single content
+                    repository for multiple projects and applications.</p>
+                </div><!--/span-->
+
+                <div class="span4">
+                    <h3 class="royal-blue-text">API User Accounts</h3>
+                    <p>Bytengine user accounts allow the administrator to control server and database access. A session key is created
+                    on user login and should be included in subsequent server protected api calls. User accounts can be
+                    granted access to more than one database.
+                    </p>
+                </div><!--/span-->
+
+                <div class="span4">
+                    <h3 class="royal-blue-text">Server Commands</h3>
+                    <p>Bytengine server commands have a classic shell like syntax which will be familiar to Unix/Linux users.
+                    Commands and their options are available in the commands section of the documentation. Command help is also
+                    available from Byterminal by typing <strong>'help'</strong> or <strong>'help *'</strong></p>
+                </div><!--/span-->
+            </div><!--/row-->
+
+            <div class="row-fluid">
+                <div class="span4">
+                    <h3 class="royal-blue-text">Files &amp; Directories</h3>
+                    <p>Bytengine uses a <strong>hierarchical</strong> data storage format similar to Unix/Linux where user content is saved in
+                    <strong>Files</strong> which are further organized into <strong>Directories</strong> with a top level
+                    <strong>root ('/') directory</strong>. Files are dual layered data containers with a searchable JSON
+                    part and a binary part which allows users to '<strong>attach</strong>' regular picture, music
+                    and pdf files among others.</p>
+                </div><!--/span-->
+
+                <div class="span4">
+                    <h3 class="royal-blue-text">Direct Access</h3>
+                    <p>Bytengine API is accessed via authenticated <strong>Http POST</strong> method calls. However content can be
+                    served directly by <strong>Http GET</strong> making Bytengine an ideal static file/data server. Bytengine Files must
+                    be marked as '<strong>public</strong>' to allow them be accessed in this '<strong>direct</strong>' manner.
+                    Further explanation can be obtained from the commands documentation.</p>
+                </div><!--/span-->
+
+                <!--/span-->
+            </div><!--/row-->
+
+        </div><!--/span-->
+
+    </div><!--/row-->
+
+</div><!--/container-->
+
+{% end %}
+
+{% block js_files %}
+<script type="text/javascript" src="{{ static_url('main/js/tabslide.js') }}"></script>
+<script type="text/javascript" src="{{ static_url('main/js/custom.js') }}"></script>
+{% end %}
+
+{% block page_js %}{% end %}

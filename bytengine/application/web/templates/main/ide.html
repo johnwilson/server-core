@@ -1,0 +1,221 @@
+{% extends base.html %}
+
+{% block css_files %}
+<link rel="stylesheet" href="{{ static_url('main/plugins/codemirror/lib/codemirror.css') }}" >
+{% end %}
+
+{% block css_page %}
+.CodeMirror {
+    background: none repeat scroll 0 0 #E1E8ED;
+    border: medium none;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) inset, 0 1px 1px rgba(255, 255, 255, 0.898);
+    padding: 6px 12px;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+{% end %}
+
+{% block page_content %}
+
+<div style="min-height: 545px;" id="main-content" class="container"><!--container-->        
+    <div id="ide">			
+			<div class="row-fluid m-t-40">
+				<div class="span3">					
+					<div class="tabbable"> 
+						<ul id="side_panel_nav" class="nav nav-pills">
+							<li class="active"><a href="#loadfile_tab">Load New</a></li>
+							<li><a href="#openedfiles_tab"></a></li>
+						</ul>						
+						<div class="tab-content">
+							
+							<div class="tab-pane active" id="loadfile_tab">
+									
+								<div class="well sidebar-nav">									
+									
+									<form id="frm_loadfile" class="form-inline">
+										
+										<div class="control-group">
+											<label class="control-label" for="">Username</label>
+											<div class="controls">
+												<input name="username" class="span11" type="text" placeholder="Username">
+											</div>
+										</div>
+										
+										<div class="control-group">
+											<label class="control-label" for="">Password</label>
+											<div class="controls">
+												<input class="span11" type="password" name="password" placeholder="Password">
+											</div>
+										</div>
+										
+										<div class="control-group">
+											<label class="control-label" for="">Database</label>
+											<div class="controls">
+												<input class="span11" type="text" name="database" placeholder="Database">
+											</div>
+										</div>
+										
+										<div class="control-group">
+											<label class="control-label" for="">Path</label>
+											<div class="controls">
+												<input autocomplete="off" class="span11" type="text" name="filepath" placeholder="">
+											</div>
+										</div>
+										
+										<br />
+										
+										<div class="control-group">
+											<div class="controls">
+												<button type="submit" class="btn btn-primary">Load</button>
+											</div>
+										</div>
+										
+									</form>                                    
+									
+								</div><!--/.well -->
+								
+							</div>
+							
+							<div class="tab-pane" id="openedfiles_tab">
+								<div class="well sidebar-nav">									
+									<ul id="openedfiles_list" class="nav nav-list">																				
+									</ul>
+									
+								</div>
+								
+							</div>
+                            <div id="notification_sidepanel" class="">
+                                <p></p>
+                            </div>
+							
+						</div>
+					</div>
+					
+					
+				</div><!--/span-->
+				
+				<div class="span9">
+					
+					<div class="hero-unit editor-controls">
+						<div class="row-fluid">
+							
+							<div class="span3">								
+								<div class="btn-group">
+                                    <button class="btn" data-toggle="dropdown">Action</button>
+                                    <ul class="dropdown-menu">
+                                        <li><a id="menu_link_reload" tabindex="-1" href="#">Reload</a></li>
+                                        <li><a id="menu_link_save" tabindex="-1" href="#">Save</a></li>
+                                        <li><a id="menu_link_close" tabindex="-1" href="#">Close</a></li>
+                                        <li class="divider"></li>
+										<li class="dropdown-submenu">
+                                            <a tabindex="-1" href="#">Attachment</a>
+                                            <ul class="dropdown-menu">
+                                                <li><a id="menu_link_attch_open" tabindex="-1" href="#">Open</a></li>
+                                                <li><a id="menu_link_attch_new" tabindex="-1" href="#">New</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="divider"></li>
+                                        <li class="dropdown-submenu">
+                                            <a tabindex="-1" href="#">Properties</a>
+                                            <ul class="dropdown-menu">
+                                                <li><a id="menu_link_makepublic" tabindex="-1" href="#">Make Public</a></li>
+                                                <li><a id="menu_link_makeprivate" tabindex="-1" href="#">Make Private</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="divider"></li>
+                                        <li class="dropdown-submenu">
+                                            <a tabindex="-1" href="#">Editor Mode</a>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="menu_link_ide_mode" tabindex="-1" href="#">Javascript</a></li>
+                                                <li><a class="menu_link_ide_mode" tabindex="-1" href="#">CSS</a></li>
+                                                <li><a class="menu_link_ide_mode" tabindex="-1" href="#">Html</a></li>
+                                                <li><a class="menu_link_ide_mode" tabindex="-1" href="#">JSON</a></li>
+                                                <li><a class="menu_link_ide_mode" tabindex="-1" href="#">Jinja2</a></li>
+                                            </ul>
+                                        </li>
+									</ul>
+									<button id="menu_btn_save" class="btn" rel="tooltip" title="Save"><i class="icon-ok"></i></button>
+									<button id="menu_btn_close" class="btn" rel="tooltip" title="Close"><i class="icon-remove"></i></button>
+									<button id="menu_btn_reload" class="btn" rel="tooltip" title="Reload File Content"><i class="icon-refresh"></i></button>									
+								</div>								
+							</div>
+							
+							<div id="status_pane" class="span9">
+                                <div id="ide_notification" style="display: none" class="">
+                                    <p></p>
+                                </div>								
+								<p id="ide_status_message" class="edited-file-name"></p>								
+							</div>
+							
+						</div>
+						
+					</div>
+					
+					<div class="tabbable">
+						<ul id="ide_tab_ctrl" class="nav nav-tabs">
+							<li class=""><a class="" href="#filecontent_tab">File Content</a></li>
+                            <li class=""><a class="" href="#attachment_tab">Attachment</a></li>
+						</ul>
+						
+						<div class="tab-content">
+							<div id="filecontent_tab" class="tab-pane active">
+								<div id="editor_file" class="hero-unit editor-area">
+									<div class="centered span6 align_center m-t-80">
+                                        <h3>No Content Loaded</h3>
+                                    </div>
+								</div>
+							</div>
+                            <div id="attachment_tab" class="tab-pane active">
+								<div id="editor_attachment" class="hero-unit editor-area">
+									<div class="centered span6 align_center m-t-80">
+                                        <h3>No Content Loaded</h3>
+                                    </div>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+				</div><!--/span-->
+				
+			</div><!--/row-->
+			
+		</div><!--/ide-->
+    
+</div><!--/container-->
+
+<!--    Templates    -->
+<script type="text/template" id="tmpl_openfiles_links">
+    <% _.each(files, function(file, index){ %>
+        <li>
+            <a rel="tooltip"
+                index="<%= index %>"
+               class="show_file_in_editor"
+               title="<%= file.path_long %>"
+               href="javascript:void(0);">
+                <%= file.path_short %>
+            </a>
+        </li>
+    <% }); %>
+</script>
+
+<script type="text/template" id="tmpl_emptyeditor">
+    <div class="centered span6 align_center m-t-80">
+        <h3>No File Currently Loaded</h3>
+    </div>
+</script>
+    
+
+{% end %}
+
+{% block js_files %}
+<script type="text/javascript" src="{{ static_url('main/plugins/codemirror/lib/codemirror.js') }}"></script>
+<script type="text/javascript" src="{{ static_url('main/plugins/codemirror/mode/javascript/javascript.js') }}"></script>
+<script type="text/javascript" src="{{ static_url('main/plugins/codemirror/mode/xml/xml.js') }}"></script>
+<script type="text/javascript" src="{{ static_url('main/plugins/codemirror/mode/css/css.js') }}"></script>
+<script type="text/javascript" src="{{ static_url('main/plugins/codemirror/mode/htmlmixed/htmlmixed.js') }}"></script>
+<script type="text/javascript" src="{{ static_url('main/plugins/codemirror/mode/jinja2/jinja2.js') }}"></script>
+<script type="text/javascript" src="{{ static_url('main/plugins/bytengine/ide.js') }}"></script>
+{% end %}
+
+{% block page_js %}{% end %}

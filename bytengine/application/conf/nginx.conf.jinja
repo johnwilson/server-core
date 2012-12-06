@@ -1,0 +1,70 @@
+user  {{ USER }};
+worker_processes  5;
+
+events {
+    worker_connections  1024;
+    use epoll;
+}
+
+http {    
+    upstream tornadoes {
+        {% for item in tornado_servers %}
+		server 127.0.0.1:{{ item.port }};
+        {% endfor %}
+	}
+
+    server {
+        listen       8500;
+        server_name  localhost;
+        
+        # Allow file uploads max 50M
+        client_max_body_size 50M;
+        
+        # POST Url
+        location /bfs/upload {
+        	# Pass altered request body to this location
+        	upload_pass @after_upload;
+        	
+        	# Store files in this directory
+        	upload_store /tmp;
+        	
+        	# Uploaded file permissions
+        	upload_store_access user:rw group:rw all:rw;
+        	
+        	# Set specified fields in request body
+        	upload_set_form_field $upload_field_name.name "$upload_file_name";
+        	upload_set_form_field $upload_field_name.content_type "$upload_content_type";
+        	upload_set_form_field $upload_field_name.path "$upload_tmp_path";
+        	
+        	# Inform backend about hash and size of file
+        	upload_aggregate_form_field "$upload_field_name.md5" "$upload_file_md5";
+        	upload_aggregate_form_field "$upload_field_name.size" "$upload_file_size";
+        	
+        	# Additional fields
+        	upload_pass_form_field "command";
+        	upload_pass_form_field "filepath";
+                upload_pass_form_field "ticket";
+        	
+        	upload_cleanup 400 404 499 500-505;
+        }
+
+        
+        location @after_upload {
+            proxy_pass   http://tornadoes;
+        }
+        
+        location /{{ ATTACHMENTS_DIR_NAME }}/ {
+        	root {{ ATTACHMENTS_DIR_ROOT }};
+        	internal;
+        }
+        
+        location / {
+            proxy_pass_header Server;
+            proxy_set_header Host $http_host;
+            proxy_redirect off;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Scheme $scheme;
+            proxy_pass http://tornadoes;
+        }
+    }
+}

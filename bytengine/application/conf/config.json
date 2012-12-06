@@ -1,0 +1,83 @@
+{
+    "general":{
+        "admin":"admin",
+        "password":"admin"
+    },
+
+    "bytengine":{
+        "help_database":"help_database.db",
+        "req_mem_timeout":60,
+        "services":{
+            "req_address":"ipc:///tmp/byte_srv_req.sock",
+            "rep_address":"ipc:///tmp/byte_srv_rep.sock",
+            "logging_address":"ipc:///tmp/byte_srv_logging.sock"
+        },
+
+        "commands":{
+            "req_address":"ipc:///tmp/byte_cmd_req.sock",
+            "rep_address":"ipc:///tmp/byte_cmd_rep.sock",
+            "logging_address":"ipc:///tmp/byte_cmd_logging.sock"
+        },
+        
+        "web":{
+            "req_address":"ipc:///tmp/byte_web_req.sock",
+            "rep_address":"ipc:///tmp/byte_web_rep.sock",
+            "logging_address":"ipc:///tmp/byte_web_logging.sock"
+        }
+    },
+
+    "mongodb":{
+        "host":"127.0.0.1",
+        "port": 27017,
+        "sysdatabase":"_bytengine"
+    },
+
+    "redis":{
+        "host":"127.0.0.1",
+        "port":6379,
+        "sessiondb":"1",
+        "memorydb":"2",
+        "searchdb":"3",
+        "cachedb":"4",
+        "pathcachedb":"5",
+        "emaildb":"6"
+    },
+
+    "services":{
+
+        "parser":{
+            "address":"ipc:///tmp/byte_srv_parser.sock"
+        },
+        
+        "email":{
+            "address":"ipc:///tmp/byte_srv_email.sock",
+            "tmpdir":"/home/fiifi/Documents/Code/bytengine_project/mailtemp",
+            "timeout":3600,
+            "checkmail_interval":60
+        },
+        
+        "emailcheck":{
+            "address":"ipc:///tmp/byte_srv_emailcheck.sock"
+        },
+
+        "bfs":{
+            "address":"ipc:///tmp/byte_srv_bfs.sock",
+            "attachments_dir":"/home/fiifi/Documents/Code/bytengine_project/attachments",
+            "reserved_dbs":["_bytengine","admin","local","dbusers"],
+            "content_collection":"bfs",
+            "counter_collection":"counters",
+            "cache_timeout":60,
+            "session_timeout":60,
+            "session_timeout_long":3600,
+            "session_max_count":10,
+            "security_collection":"users"
+        }
+    },
+
+    "commands":{
+
+        "core":{
+            "address":"ipc:///tmp/byte_cmd_core.sock"
+        }
+    }
+}
